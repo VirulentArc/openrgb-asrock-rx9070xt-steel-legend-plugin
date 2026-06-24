@@ -19,22 +19,22 @@ This plugin exposes the card as one normal OpenRGB device and adds a plugin tab 
 
 ## Install
 
-Download the compiled plugin file for your operating system from the release page.
+This repository currently provides the plugin source code.
 
-OpenRGB's normal plugin installer is the recommended method:
+Prebuilt plugin files may be attached to GitHub releases when available. Use the plugin file that matches your operating system and OpenRGB build.
+
+Current binary status:
+
+- Linux: tested locally as `libOpenRGBASRockRX9070XTPlugin.so`
+- Windows: source is intended to support Windows through OpenRGB's plugin/I2C layer, but no prebuilt Windows `.dll` is provided yet
+
+To install a prebuilt plugin file, use OpenRGB's plugin installer:
 
 ```text
 Settings -> Plugins -> Install Plugin
 ```
 
-Select the plugin file for your operating system:
-
-```text
-Windows: OpenRGBASRockRX9070XTPlugin.dll
-Linux:   libOpenRGBASRockRX9070XTPlugin.so
-```
-
-Restart OpenRGB after installing.
+Then restart OpenRGB.
 
 You should see one device:
 
@@ -50,13 +50,7 @@ Settings -> Plugins -> ASRock GPU RGB
 
 ## Manual install
 
-If you do not want to use the OpenRGB plugin installer, copy the plugin file into OpenRGB's plugin folder.
-
-Windows:
-
-```text
-%APPDATA%\OpenRGB\plugins
-```
+If you do not want to use OpenRGB's plugin installer, copy the plugin file into OpenRGB's plugin folder.
 
 Linux:
 
@@ -64,7 +58,15 @@ Linux:
 ~/.config/OpenRGB/plugins
 ```
 
+Windows:
+
+```text
+%APPDATA%\OpenRGB\plugins
+```
+
 Then restart OpenRGB.
+
+A Linux `.so` file will not load on Windows. Windows needs a Windows `.dll` build.
 
 ## Usage
 
@@ -125,29 +127,11 @@ Do not use this plugin with unrelated GPUs unless you know they use the same RGB
 Platform status:
 
 - Linux: tested
-- Windows: intended/supported by source, but needs a Windows `.dll` build and user testing
-
-A Linux `.so` file will not load on Windows. Windows users need a Windows plugin build, usually named something like:
-
-```text
-OpenRGBASRockRX9070XTPlugin.dll
-```
-
-Linux users need a Linux plugin build, usually named something like:
-
-```text
-libOpenRGBASRockRX9070XTPlugin.so
-```
+- Windows: intended by source design, but not yet built or tested
 
 ## Remove
 
 Close OpenRGB and remove the plugin file from OpenRGB's plugin folder.
-
-Windows:
-
-```text
-%APPDATA%\OpenRGB\plugins\OpenRGBASRockRX9070XTPlugin.dll
-```
 
 Linux:
 
@@ -155,11 +139,19 @@ Linux:
 rm -f ~/.config/OpenRGB/plugins/libOpenRGBASRockRX9070XTPlugin.so
 ```
 
+Windows:
+
+```text
+%APPDATA%\OpenRGB\plugins
+```
+
+Remove the plugin `.dll` from that folder if you installed a Windows build.
+
 Then start OpenRGB again.
 
 ## Build from source
 
-Most users do **not** need this section. This is only needed if you want to build the plugin yourself.
+Most users do **not** need this section. This is only needed if you want to build the plugin yourself or if a prebuilt plugin is not available for your operating system.
 
 Important: build the plugin with the same Qt major version and a compatible compiler/toolchain for the OpenRGB build you are using.
 
@@ -200,9 +192,11 @@ The built plugin should appear here:
 build/libOpenRGBASRockRX9070XTPlugin.so
 ```
 
-### Windows example
+### Windows build notes
 
-Build from a Qt command prompt or Qt Creator using the same Qt major version/toolchain as your OpenRGB build.
+A Windows `.dll` is not currently provided by this repository.
+
+To make one, build from a Qt command prompt or Qt Creator using the same Qt major version and compiler family as your OpenRGB build. For example, if your OpenRGB build uses Qt5 MinGW, build this plugin with Qt5 MinGW as well.
 
 Set `OPENRGB_ROOT` to the OpenRGB source tree, then run qmake and your compiler's make tool. For a MinGW Qt5 build, that usually looks like:
 
@@ -239,4 +233,4 @@ Notes and limitations:
 
 ## License
 
-See the repository license file.
+See [LICENSE](LICENSE) if included with this repository.
