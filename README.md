@@ -2,43 +2,7 @@
 
 OpenRGB plugin for controlling the RGB lighting on the **ASRock Radeon RX 9070 XT Steel Legend** GPU.
 
-This plugin exposes the card as one normal OpenRGB device and also adds a plugin tab for reliable per-channel control.
-
-## Hardware target
-
-This plugin is intended for the **ASRock Radeon RX 9070 XT Steel Legend**.
-
-Known working hardware values from testing:
-
-- I2C address: `0x36`
-- OpenRGB I2C bus ID used by the current test build: `7`
-- Channels:
-  - `3` = ARGB Header
-  - `6` = Top / Side
-  - `7` = Fan
-
-Do not use this plugin with unrelated GPUs unless you know they use the same RGB controller and I2C protocol.
-
-## Platform support
-
-This is an OpenRGB plugin, so the source is intended to be cross-platform as long as it is built against a compatible OpenRGB/Qt version for that operating system.
-
-Current status:
-
-- Linux: tested
-- Windows: intended/supported by source, but needs a Windows `.dll` build
-
-A Linux `.so` file will not load on Windows. Windows users need a Windows plugin build, usually named something like:
-
-```text
-OpenRGBASRockRX9070XTPlugin.dll
-```
-
-Linux users need a Linux plugin build, usually named something like:
-
-```text
-libOpenRGBASRockRX9070XTPlugin.so
-```
+This plugin exposes the card as one normal OpenRGB device and adds a plugin tab for reliable per-channel control.
 
 ## Features
 
@@ -152,6 +116,29 @@ Use the normal OpenRGB device page for whole-GPU changes.
 
 Use the plugin tab for per-channel mode/color/speed/brightness control.
 
+## Compatibility
+
+This plugin is intended for the **ASRock Radeon RX 9070 XT Steel Legend**.
+
+Do not use this plugin with unrelated GPUs unless you know they use the same RGB controller and I2C protocol.
+
+Platform status:
+
+- Linux: tested
+- Windows: intended/supported by source, but needs a Windows `.dll` build and user testing
+
+A Linux `.so` file will not load on Windows. Windows users need a Windows plugin build, usually named something like:
+
+```text
+OpenRGBASRockRX9070XTPlugin.dll
+```
+
+Linux users need a Linux plugin build, usually named something like:
+
+```text
+libOpenRGBASRockRX9070XTPlugin.so
+```
+
 ## Remove
 
 Close OpenRGB and remove the plugin file from OpenRGB's plugin folder.
@@ -231,10 +218,19 @@ The Windows build should produce a `.dll` plugin file. Install that `.dll` throu
 %APPDATA%\OpenRGB\plugins
 ```
 
-## Notes and limitations
+## Technical notes
 
-- This is a hardware-specific plugin for the ASRock RX 9070 XT Steel Legend.
-- Linux has been tested; Windows support needs a Windows `.dll` build and user testing.
+Known working hardware values from testing:
+
+- I2C address: `0x36`
+- OpenRGB I2C bus ID used by the current test build: `7`
+- Channels:
+  - `3` = ARGB Header
+  - `6` = Top / Side
+  - `7` = Fan
+
+Notes and limitations:
+
 - The normal OpenRGB Mode dropdown is best treated as whole-device control.
 - For per-channel mode control, use the plugin tab.
 - Direct Mode / Effects Plugin support is not enabled yet.
