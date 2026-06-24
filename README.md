@@ -1,6 +1,6 @@
 # OpenRGB ASRock RX 9070 XT Steel Legend Plugin
 
-OpenRGB plugin for controlling the RGB lighting on the **ASRock Radeon RX 9070 XT Steel Legend** GPU on Linux.
+OpenRGB plugin for controlling the RGB lighting on the **ASRock Radeon RX 9070 XT Steel Legend** GPU.
 
 This plugin exposes the card as one normal OpenRGB device and also adds a plugin tab for reliable per-channel control.
 
@@ -8,16 +8,37 @@ This plugin exposes the card as one normal OpenRGB device and also adds a plugin
 
 This plugin is intended for the **ASRock Radeon RX 9070 XT Steel Legend**.
 
-Known working hardware values:
+Known working hardware values from testing:
 
-- I2C bus: `7`
 - I2C address: `0x36`
+- OpenRGB I2C bus ID used by the current test build: `7`
 - Channels:
   - `3` = ARGB Header
   - `6` = Top / Side
   - `7` = Fan
 
 Do not use this plugin with unrelated GPUs unless you know they use the same RGB controller and I2C protocol.
+
+## Platform support
+
+This is an OpenRGB plugin, so the source is intended to be cross-platform as long as it is built against a compatible OpenRGB/Qt version for that operating system.
+
+Current status:
+
+- Linux: tested
+- Windows: intended/supported by source, but needs a Windows `.dll` build
+
+A Linux `.so` file will not load on Windows. Windows users need a Windows plugin build, usually named something like:
+
+```text
+OpenRGBASRockRX9070XTPlugin.dll
+```
+
+Linux users need a Linux plugin build, usually named something like:
+
+```text
+libOpenRGBASRockRX9070XTPlugin.so
+```
 
 ## Features
 
@@ -34,26 +55,22 @@ Do not use this plugin with unrelated GPUs unless you know they use the same RGB
 
 ## Install
 
-Download the compiled plugin file from the release page:
+Download the compiled plugin file for your operating system from the release page.
+
+OpenRGB's normal plugin installer is the recommended method:
 
 ```text
-libOpenRGBASRockRX9070XTPlugin.so
+Settings -> Plugins -> Install Plugin
 ```
 
-Close OpenRGB.
+Select the plugin file for your operating system:
 
-Copy the plugin into your OpenRGB plugins folder:
-
-```bash
-mkdir -p ~/.config/OpenRGB/plugins
-cp libOpenRGBASRockRX9070XTPlugin.so ~/.config/OpenRGB/plugins/
+```text
+Windows: OpenRGBASRockRX9070XTPlugin.dll
+Linux:   libOpenRGBASRockRX9070XTPlugin.so
 ```
 
-Start OpenRGB:
-
-```bash
-openrgb
-```
+Restart OpenRGB after installing.
 
 You should see one device:
 
@@ -67,21 +84,23 @@ You should also see the plugin page under:
 Settings -> Plugins -> ASRock GPU RGB
 ```
 
-## GUI install
+## Manual install
 
-You can also install the `.so` from OpenRGB's plugin page:
+If you do not want to use the OpenRGB plugin installer, copy the plugin file into OpenRGB's plugin folder.
 
-```text
-Settings -> Plugins -> Install Plugin
-```
-
-Select:
+Windows:
 
 ```text
-libOpenRGBASRockRX9070XTPlugin.so
+%APPDATA%\OpenRGB\plugins
 ```
 
-Restart OpenRGB after installing.
+Linux:
+
+```text
+~/.config/OpenRGB/plugins
+```
+
+Then restart OpenRGB.
 
 ## Usage
 
@@ -135,25 +154,32 @@ Use the plugin tab for per-channel mode/color/speed/brightness control.
 
 ## Remove
 
-Close OpenRGB, then remove the plugin file:
+Close OpenRGB and remove the plugin file from OpenRGB's plugin folder.
+
+Windows:
+
+```text
+%APPDATA%\OpenRGB\plugins\OpenRGBASRockRX9070XTPlugin.dll
+```
+
+Linux:
 
 ```bash
 rm -f ~/.config/OpenRGB/plugins/libOpenRGBASRockRX9070XTPlugin.so
 ```
 
-Then start OpenRGB again:
-
-```bash
-openrgb
-```
+Then start OpenRGB again.
 
 ## Build from source
 
 Most users do **not** need this section. This is only needed if you want to build the plugin yourself.
 
+Important: build the plugin with the same Qt major version and a compatible compiler/toolchain for the OpenRGB build you are using.
+
+### Linux example
+
 Requirements:
 
-- Linux
 - OpenRGB built with Qt5
 - Qt5 build tools
 - Matching OpenRGB source tree for the OpenRGB version you are building against
@@ -187,21 +213,32 @@ The built plugin should appear here:
 build/libOpenRGBASRockRX9070XTPlugin.so
 ```
 
-Install the built plugin:
+### Windows example
 
-```bash
-mkdir -p ~/.config/OpenRGB/plugins
-cp -v build/libOpenRGBASRockRX9070XTPlugin.so ~/.config/OpenRGB/plugins/
-openrgb
+Build from a Qt command prompt or Qt Creator using the same Qt major version/toolchain as your OpenRGB build.
+
+Set `OPENRGB_ROOT` to the OpenRGB source tree, then run qmake and your compiler's make tool. For a MinGW Qt5 build, that usually looks like:
+
+```bat
+set OPENRGB_ROOT=C:\path\to\OpenRGB
+qmake OpenRGBASRockRX9070XTPlugin.pro
+mingw32-make
+```
+
+The Windows build should produce a `.dll` plugin file. Install that `.dll` through OpenRGB's plugin installer or copy it to:
+
+```text
+%APPDATA%\OpenRGB\plugins
 ```
 
 ## Notes and limitations
 
 - This is a hardware-specific plugin for the ASRock RX 9070 XT Steel Legend.
+- Linux has been tested; Windows support needs a Windows `.dll` build and user testing.
 - The normal OpenRGB Mode dropdown is best treated as whole-device control.
 - For per-channel mode control, use the plugin tab.
 - Direct Mode / Effects Plugin support is not enabled yet.
-- The known working I2C bus is currently hardcoded to bus `7`.
+- The current test build targets OpenRGB I2C bus ID `7`. If a system enumerates the GPU RGB controller under a different OpenRGB bus ID, the plugin may need a configurable bus setting in a future release.
 - Unknown modes or addresses should not be tested blindly. Earlier hardware testing showed that some invalid mode values could wedge the GPU RGB controller until a cold power cycle.
 
 ## License
