@@ -7,7 +7,7 @@ This plugin exposes the card as one normal OpenRGB device and adds a plugin tab 
 ## Features
 
 - Static color control
-- Hardware effects such as Breathing, Strobe, RGB Cycle, Color Wave, and others
+- Hardware effects such as Breathing, Strobe, Cycling, Rainbow, Rainbow 2, and others
 - Brightness control
 - Speed control with corrected OpenRGB-to-hardware speed mapping
 - One normal OpenRGB device: `ASRock RX 9070 XT Steel Legend`
@@ -104,7 +104,7 @@ Example: all channels
 
 ```text
 Target: All GPU RGB zones
-Mode: Color Wave
+Mode: Rainbow 2
 Apply
 ```
 

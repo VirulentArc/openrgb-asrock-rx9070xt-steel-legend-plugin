@@ -27,26 +27,28 @@ RGBController_ASRockRX9070XT::RGBController_ASRockRX9070XT(ASRockRX9070XTControl
     name        = "ASRock RX 9070 XT Steel Legend";
     vendor      = "ASRock";
     description = "ASRock RX 9070 XT Steel Legend GPU RGB Controller";
-    version     = "0.1.1";
+    version     = "0.1.2";
     serial      = "";
     location    = controller ? controller->GetLocation() : "I2C bus unavailable";
     type        = DEVICE_TYPE_GPU;
     flags       = CONTROLLER_FLAG_LOCAL;
 
+    AddHardwareMode("Off Mode",              0x01, MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_MODE_SPECIFIC);
+    modes.back().colors[0] = ToRGBColor(0, 0, 0);
     AddHardwareMode("Static",                0x01, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
     AddHardwareMode("Breathing",             0x02, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
     AddHardwareMode("Strobe",                0x03, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
-    AddHardwareMode("RGB Cycle",             0x04, MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_NONE);
+    AddHardwareMode("Cycling",               0x04, MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_NONE);
     AddHardwareMode("Random",                0x05, MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS | MODE_FLAG_HAS_RANDOM_COLOR, MODE_COLORS_RANDOM);
-    AddHardwareMode("Color Shift",           0x07, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
-    AddHardwareMode("Visor",                 0x08, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
-    AddHardwareMode("Stacking",              0x09, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
-    AddHardwareMode("Fill Wave",             0x0A, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
-    AddHardwareMode("Traveling Wave",        0x0B, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
-    AddHardwareMode("Marquee Color",         0x0C, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
-    AddHardwareMode("Marquee Random",        0x0D, MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS | MODE_FLAG_HAS_RANDOM_COLOR, MODE_COLORS_RANDOM);
-    AddHardwareMode("Color Wave",            0x0E, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
+    AddHardwareMode("Wave",                  0x07, MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_NONE);
+    AddHardwareMode("Spring",                0x08, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
+    AddHardwareMode("Stack",                 0x09, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
+    AddHardwareMode("Cram",                  0x0A, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
+    AddHardwareMode("Scan",                  0x0B, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
+    AddHardwareMode("Neon",                  0x0C, MODE_FLAG_HAS_PER_LED_COLOR | MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_PER_LED);
+    AddHardwareMode("Water",                 0x0D, MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS | MODE_FLAG_HAS_RANDOM_COLOR, MODE_COLORS_RANDOM);
     AddHardwareMode("Rainbow",               0x0F, MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_NONE);
+    AddHardwareMode("Rainbow 2",             0x0E, MODE_FLAG_HAS_SPEED | MODE_FLAG_HAS_BRIGHTNESS, MODE_COLORS_NONE);
 
     SetupZones();
 }

@@ -238,20 +238,21 @@ void ASRockRX9070XTPlugin::PopulateTargets()
 void ASRockRX9070XTPlugin::PopulateModes()
 {
     mode_combo->clear();
-    mode_combo->addItem("Static",         0x01);
-    mode_combo->addItem("Breathing",      0x02);
-    mode_combo->addItem("Strobe",         0x03);
-    mode_combo->addItem("RGB Cycle",      0x04);
-    mode_combo->addItem("Random",         0x05);
-    mode_combo->addItem("Color Shift",    0x07);
-    mode_combo->addItem("Visor",          0x08);
-    mode_combo->addItem("Stacking",       0x09);
-    mode_combo->addItem("Fill Wave",      0x0A);
-    mode_combo->addItem("Traveling Wave", 0x0B);
-    mode_combo->addItem("Marquee Color",  0x0C);
-    mode_combo->addItem("Marquee Random", 0x0D);
-    mode_combo->addItem("Color Wave",     0x0E);
-    mode_combo->addItem("Rainbow",        0x0F);
+    mode_combo->addItem("Off Mode",  0x01);
+    mode_combo->addItem("Static",    0x01);
+    mode_combo->addItem("Breathing", 0x02);
+    mode_combo->addItem("Strobe",    0x03);
+    mode_combo->addItem("Cycling",   0x04);
+    mode_combo->addItem("Random",    0x05);
+    mode_combo->addItem("Wave",      0x07);
+    mode_combo->addItem("Spring",    0x08);
+    mode_combo->addItem("Stack",     0x09);
+    mode_combo->addItem("Cram",      0x0A);
+    mode_combo->addItem("Scan",      0x0B);
+    mode_combo->addItem("Neon",      0x0C);
+    mode_combo->addItem("Water",     0x0D);
+    mode_combo->addItem("Rainbow",   0x0F);
+    mode_combo->addItem("Rainbow 2", 0x0E);
 }
 
 void ASRockRX9070XTPlugin::UpdateColorButton()
@@ -301,12 +302,18 @@ void ASRockRX9070XTPlugin::ApplyPanelSettings()
     const uint8_t mode_value = static_cast<uint8_t>(mode_combo->currentData().toInt());
     const uint8_t speed_value = static_cast<uint8_t>(speed_slider->value());
     const uint8_t brightness_value = static_cast<uint8_t>(brightness_slider->value());
+    QColor apply_color = selected_color;
+
+    if(mode_combo->currentText() == "Off Mode")
+    {
+        apply_color = QColor(0, 0, 0);
+    }
 
     controller->ApplyCustomSettings(target_index,
                                     mode_value,
-                                    static_cast<uint8_t>(selected_color.red()),
-                                    static_cast<uint8_t>(selected_color.green()),
-                                    static_cast<uint8_t>(selected_color.blue()),
+                                    static_cast<uint8_t>(apply_color.red()),
+                                    static_cast<uint8_t>(apply_color.green()),
+                                    static_cast<uint8_t>(apply_color.blue()),
                                     speed_value,
                                     brightness_value,
                                     0x00);
